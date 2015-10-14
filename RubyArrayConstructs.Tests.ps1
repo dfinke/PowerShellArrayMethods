@@ -67,4 +67,22 @@ Describe "Ruby array constructs are available on an ArrayList" {
         $al.count | should be 1
         $al[0] | should be 2
     }
+
+    It "Shift should work when requesting more items than remain" {
+        [system.collections.arraylist]$a = 1..10
+
+        $count=1
+        $h=@{}
+        while($a) {
+            $h."grp$($count)" = $a.shift(4)
+            $count++
+        }
+
+        $a | Should be $null
+        $h.keys.count| should be 3
+
+        $h.grp1.count | should be 4
+        $h.grp2.count | should be 4
+        $h.grp3.count | should be 2
+    }
 }

@@ -27,14 +27,19 @@ Update-TypeData -Force -Typename System.Collections.ArrayList -MemberType Script
 
     if($args.Count -gt 0) { $targetIndex = $args[0] }
 
-    $targetIndex--
+    if($targetIndex -gt $this.count) {
+        $this
+        $this.Clear()
+    } else {
+        $targetIndex--
 
-    if ($this.count -gt 0) {
-        return 0..$targetIndex |
-            ForEach {
-                $this[0]
-                $this.RemoveAt(0)
-            }
+        if ($this.count -gt 0) {
+            return 0..$targetIndex |
+                ForEach {
+                    $this[0]
+                    $this.RemoveAt(0)
+                }
+        }
     }
 }
 
