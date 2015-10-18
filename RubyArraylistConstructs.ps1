@@ -48,3 +48,28 @@ Update-TypeData -Force -Typename System.Collections.ArrayList -MemberType Script
         $this.insert(0,$args[$i])
     }
 }
+
+Update-TypeData -Force -TypeName System.String -MemberType ScriptMethod -MemberName Translate -Value {
+    
+    $InputTable  = $args[0]
+    $OutputTable = $args[1]
+    
+    $TranslationTable = @{}
+    
+    $result = $null
+
+    for($idx=0; $idx -lt $InputTable.Length; $idx+=1) {
+        $TranslationTable[$InputTable[$idx]]=$OutputTable[$idx]
+    }    
+
+    for($idx=0; $idx -lt $this.Length; $idx+=1) {
+
+        $char = $this[$idx]
+        $found = $TranslationTable[$char]
+
+        if($found) { $result+=$found } 
+              else { $result+=$char  }
+    }
+
+    return $result    
+}

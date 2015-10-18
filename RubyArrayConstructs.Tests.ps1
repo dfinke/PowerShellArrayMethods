@@ -1,6 +1,18 @@
 $scriptRoot = Split-Path $MyInvocation.MyCommand.Path
 . "$scriptRoot\RubyArraylistConstructs.ps1"
 
+Describe "Translate added to the String" {
+    It "Can translate" {
+        $actual = "Hello World".Translate("aeiou","12345")
+        $actual | Should Be "H2ll4 W4rld"
+    }
+
+    It "Can translate Lower and Upper case" {
+        $actual = "Hello WOrld".Translate("aeiouAEIOU","1234506789")
+        $actual | Should Be "H2ll4 W8rld"
+    }
+}
+
 Describe "Ruby array constructs are available on an ArrayList" {
 
     BeforeEach {
